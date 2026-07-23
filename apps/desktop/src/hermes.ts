@@ -17,6 +17,7 @@ import type {
   CustomEndpointsResponse,
   CustomEndpointUpdate,
   CustomEndpointValidationResponse,
+  DashboardHandoffTicketResponse,
   DashboardRemoteAccessResponse,
   DebugShareResponse,
   ElevenLabsVoicesResponse,
@@ -143,6 +144,7 @@ export type {
   CustomEndpointsResponse,
   CustomEndpointUpdate,
   CustomEndpointValidationResponse,
+  DashboardHandoffTicketResponse,
   DashboardRemoteAccessResponse,
   DebugShareResponse,
   ElevenLabsVoice,
@@ -620,6 +622,21 @@ export function getDashboardRemoteAccess(profile?: string): Promise<DashboardRem
   return window.hermesDesktop.api<DashboardRemoteAccessResponse>({
     ...(profile ? { profile } : profileScoped()),
     path: '/api/dashboard/remote-access'
+  })
+}
+
+export function getDashboardHandoffTicket(
+  sessionId: string,
+  profile?: string
+): Promise<DashboardHandoffTicketResponse> {
+  return window.hermesDesktop.api<DashboardHandoffTicketResponse>({
+    ...(profile ? { profile } : profileScoped()),
+    body: {
+      profile: profile || '',
+      session_id: sessionId
+    },
+    method: 'POST',
+    path: '/api/auth/handoff-ticket'
   })
 }
 
